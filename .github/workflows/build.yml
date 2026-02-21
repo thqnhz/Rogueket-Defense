@@ -62,7 +62,7 @@ jobs:
         fi
 
     - name: Package sources
-      if: matrix.os == 'ubuntu-22.04'
+      if: matrix.os == 'ubuntu-latest'
       run: |
         git archive --format=tar.gz --prefix=RogueketDefense-${{ github.ref_name }}/ -o RogueketDefense-sources.tar.gz HEAD
 
@@ -71,6 +71,7 @@ jobs:
         cmake --build --preset conan-release
 
     - name: Package binary
+      shell: bash
       run: |
         mkdir -p dist
         cp LICENSE dist/
