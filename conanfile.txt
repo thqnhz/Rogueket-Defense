@@ -1,0 +1,10 @@
+[requires]
+raylib/5.5
+tomlplusplus/3.4.0
+
+[generators]
+CMakeDeps
+CMakeToolchain
+
+[layout]
+cmake_layout
