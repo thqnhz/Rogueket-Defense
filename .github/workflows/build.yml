@@ -53,6 +53,7 @@ jobs:
         key: conan-${{ runner.os }}-${{ hashFiles('conanfile.txt') }}
 
     - name: Config cmake
+      shell: bash
       run: |
         if [[ "$RUNNER_OS" == "Windows" ]]; then
           cmake --preset conan-default
