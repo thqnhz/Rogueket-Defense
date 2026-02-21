@@ -69,6 +69,7 @@ jobs:
         cmake --build --preset conan-release
 
     - name: Package binary
+      run: |
         mkdir -p dist
         cp LICENSE dist/
         cp -r assets dist/ || true
