@@ -25,7 +25,7 @@ jobs:
       if: runner.os == 'Linux'
       run: |
         sudo apt-get update
-        sudo apt-get install -y python3-pip cmake ninja-build pkg-config libgl-dev libgl1-mesa-dev
+        sudo apt-get install -y python3-pip cmake ninja-build pkg-config 
 
     - name: Install dependencies (MacOS)
       if: runner.os == 'macOS'
@@ -44,7 +44,7 @@ jobs:
     - name: Install game dependencies
       run: |
         conan profile detect --force
-        conan install . --build=missing -s build_type=Release -s compiler.cppstd=23
+        conan install . --build=missing -s build_type=Release -s compiler.cppstd=23 -c tools.system.package_manager:mode=install
 
     - name: Cache conan
       uses: actions/cache@v4
@@ -54,7 +54,11 @@ jobs:
 
     - name: Config cmake
       run: |
-        cmake --preset conan-release
+        if [[ "$RUNNER_OS" == "Windows" ]]; then
+          cmake --preset conan-default
+        else
+          cmake --preset conan-release
+        fi
 
     - name: Package sources
       if: matrix.os == 'ubuntu-22.04'
@@ -63,7 +67,11 @@ jobs:
 
     - name: Build
       run: |
-        cmake --build --preset conan-release
+        if [[ "$RUNNER_OS" == "Windows" ]]; then
+          cmake build --preset conan-default
+        else
+          cmake build --preset conan-release
+        fi
 
     - name: Package binary
       run: |
