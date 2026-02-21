@@ -67,6 +67,7 @@ jobs:
         git archive --format=tar.gz --prefix=RogueketDefense-${{ github.ref_name }}/ -o RogueketDefense-sources.tar.gz HEAD
 
     - name: Build
+      shell: bash
       run: |
         if [[ "$RUNNER_OS" == "Windows" ]]; then
           cmake --build --preset conan-default
